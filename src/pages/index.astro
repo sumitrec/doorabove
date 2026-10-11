@@ -1,0 +1,625 @@
+---
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>भोपाल भूमि विकास सहायक | Municipal Building Permission Portal</title>
+    <meta
+      name="description"
+      content="Official scrutiny desk for Bhopal Municipal Corporation (BMC) Building Permission branch. Verifies MP Bhumi Vikas Rules 2012 consolidated up to 6 March 2025."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen bg-[#f8fafc] text-slate-900 flex flex-col antialiased selection:bg-blue-100 selection:text-blue-900">
+    <!-- Header: Deep blue navbar (#1e3a8a) -->
+    <header class="bg-[#1e3a8a] text-white shadow-md sticky top-0 z-50 border-b border-blue-900">
+      <div class="max-w-5xl mx-auto px-4 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <!-- Logo & Official Title -->
+        <div class="flex items-center gap-3.5">
+          <!-- मध्यप्रदेश शासन Crest Icon -->
+          <div class="w-11 h-11 rounded-lg bg-white/10 border border-white/20 flex flex-col items-center justify-center p-1 text-center shrink-0 shadow-inner">
+            <svg class="w-5 h-5 text-amber-300 mb-0.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+            </svg>
+            <span class="text-[8px] font-bold leading-none uppercase tracking-tighter text-blue-100">म.प्र. शासन</span>
+          </div>
+
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 bg-blue-800/80 text-blue-100 rounded border border-blue-700">
+                मध्यप्रदेश शासन • Bhopal Municipal Corporation
+              </span>
+            </div>
+            <h1 class="text-base sm:text-lg font-bold tracking-tight text-white leading-snug mt-0.5">
+              भोपाल भूमि विकास सहायक | Municipal Building Permission Portal
+            </h1>
+          </div>
+        </div>
+
+        <!-- Clean White/Blue English/Hindi Toggle -->
+        <div class="inline-flex items-center bg-blue-950/40 p-1 rounded-lg border border-blue-800 shadow-inner">
+          <button
+            type="button"
+            id="lang-btn-en"
+            class="px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-white text-[#1e3a8a] shadow-sm cursor-pointer"
+          >
+            English
+          </button>
+          <button
+            type="button"
+            id="lang-btn-hi"
+            class="px-3 py-1.5 rounded-md text-xs font-medium transition-all text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer"
+          >
+            हिन्दी
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8 sm:py-10 space-y-6">
+      
+      <!-- Search Box Card: White card with rounded corners & subtle shadow -->
+      <section class="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 shadow-sm shadow-slate-200/60 space-y-5">
+        <div class="flex items-center justify-between pb-1 border-b border-slate-100">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">
+              Statutory Scrutiny Query • MP Bhumi Vikas Rules 2012
+            </span>
+          </div>
+          <span class="text-xs font-semibold text-slate-500 hidden sm:inline">
+            Consolidated up to 6 March 2025
+          </span>
+        </div>
+
+        <form id="clerk-search-form" class="space-y-4">
+          <div class="flex flex-col sm:flex-row items-stretch gap-3">
+            <div class="relative flex-1">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="search-input"
+                name="query"
+                autocomplete="off"
+                placeholder="Search rule number, setback dimensions, parking ratios, water buffer..."
+                class="w-full pl-11 pr-4 py-3.5 text-base bg-slate-50/50 border border-slate-300 focus:border-[#1e3a8a] focus:bg-white focus:ring-4 focus:ring-blue-100 rounded-xl text-slate-900 placeholder-slate-400 outline-none transition font-medium"
+              />
+            </div>
+            
+            <!-- Crisp Dark Blue Search Button (#1e3a8a) -->
+            <button
+              type="submit"
+              id="search-btn"
+              class="px-7 py-3.5 bg-[#1e3a8a] hover:bg-[#172554] active:scale-[0.99] text-white font-bold text-sm sm:text-base rounded-xl shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer border border-blue-900 shrink-0"
+            >
+              <span id="search-btn-label">Search Rules</span>
+              <svg id="search-spinner" class="hidden w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Quick Chips: 6 Clean White Pill Buttons with Blue Borders -->
+          <div class="pt-2">
+            <div class="flex items-center gap-1.5 mb-2.5">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                Common Clerk Checks:
+              </span>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <button
+                type="button"
+                class="quick-chip px-3.5 py-1.5 rounded-full bg-white hover:bg-blue-50 border border-blue-300 hover:border-[#1e3a8a] text-[#1e3a8a] font-semibold transition-all shadow-2xs hover:shadow-xs cursor-pointer flex items-center gap-1.5"
+                data-query="200 sqm Plot Setbacks"
+              >
+                <span>📐 200 sqm Plot Setbacks</span>
+              </button>
+
+              <button
+                type="button"
+                class="quick-chip px-3.5 py-1.5 rounded-full bg-white hover:bg-blue-50 border border-blue-300 hover:border-[#1e3a8a] text-[#1e3a8a] font-semibold transition-all shadow-2xs hover:shadow-xs cursor-pointer flex items-center gap-1.5"
+                data-query="Bada Talab 50m Buffer"
+              >
+                <span>🌊 Bada Talab 50m Buffer</span>
+              </button>
+
+              <button
+                type="button"
+                class="quick-chip px-3.5 py-1.5 rounded-full bg-white hover:bg-blue-50 border border-blue-300 hover:border-[#1e3a8a] text-[#1e3a8a] font-semibold transition-all shadow-2xs hover:shadow-xs cursor-pointer flex items-center gap-1.5"
+                data-query="ECS Parking Rules"
+              >
+                <span>🚗 ECS Parking Rules</span>
+              </button>
+
+              <button
+                type="button"
+                class="quick-chip px-3.5 py-1.5 rounded-full bg-white hover:bg-blue-50 border border-blue-300 hover:border-[#1e3a8a] text-[#1e3a8a] font-semibold transition-all shadow-2xs hover:shadow-xs cursor-pointer flex items-center gap-1.5"
+                data-query="Basement Restrictions"
+              >
+                <span>🏢 Basement Restrictions</span>
+              </button>
+
+              <button
+                type="button"
+                class="quick-chip px-3.5 py-1.5 rounded-full bg-white hover:bg-blue-50 border border-blue-300 hover:border-[#1e3a8a] text-[#1e3a8a] font-semibold transition-all shadow-2xs hover:shadow-xs cursor-pointer flex items-center gap-1.5"
+                data-query="Rainwater Harvesting"
+              >
+                <span>💧 Rainwater Harvesting</span>
+              </button>
+
+              <button
+                type="button"
+                class="quick-chip px-3.5 py-1.5 rounded-full bg-white hover:bg-rose-50 border border-rose-300 hover:border-rose-600 text-rose-800 font-semibold transition-all shadow-2xs hover:shadow-xs cursor-pointer flex items-center gap-1.5"
+                data-query="Cryptocurrency Mining"
+              >
+                <span>🚫 Cryptocurrency Mining</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Results Area -->
+      <section id="results-area" class="space-y-4">
+        <!-- Initial Ready State -->
+        <div id="initial-ready-card" class="bg-white border border-slate-200 rounded-2xl p-8 text-center shadow-xs">
+          <div class="w-12 h-12 mx-auto rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#1e3a8a] mb-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold text-slate-800 mb-1">
+            Bhopal Municipal Scrutiny Desk Ready
+          </h3>
+          <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+            Select any quick clerk check chip or type a building permission query to verify permissible parameters under MP Bhumi Vikas Rules 2012.
+          </p>
+        </div>
+
+        <!-- Silent Banner: Soft amber/red warning card for out-of-scope rules -->
+        <div
+          id="silent-warning-banner"
+          class="hidden bg-amber-50/90 border-2 border-amber-300/90 rounded-2xl p-6 shadow-sm text-center space-y-2 animate-fadeIn"
+        >
+          <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-100 text-amber-700 mb-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold text-amber-950 tracking-tight">
+            Rule Silent / Not Found in MP Bhumi Vikas Rules 2012
+          </h2>
+          <p class="text-xs sm:text-sm text-amber-800 max-w-xl mx-auto leading-relaxed">
+            The queried term or activity is not recognized, permissible, or regulated within the Madhya Pradesh Bhumi Vikas Rules, 2012 (Consolidated up to 6 March 2025). The clerk must refer this matter to the Municipal Town Planning Officer.
+          </p>
+        </div>
+
+        <!-- Results Card: Clean White Card -->
+        <div
+          id="results-card"
+          class="hidden bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-sm space-y-6 animate-fadeIn"
+        >
+          <!-- Top Row: Rule & Page Badges + Amendment Warning Tag + Action Buttons -->
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div class="flex items-center flex-wrap gap-2.5">
+              <span
+                id="rule-badge"
+                class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-[#1e3a8a] text-white font-mono tracking-wide shadow-2xs"
+              >
+                Rule --
+              </span>
+              <span
+                id="page-badge"
+                class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-slate-100 text-slate-700 border border-slate-200 font-mono tracking-wide"
+              >
+                PDF Page --
+              </span>
+
+              <!-- Amendment Warning Tag -->
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 border border-amber-300 text-amber-900 rounded-lg text-xs font-semibold">
+                <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <span>Consolidated to March 2025 (Check Aug 2026 update for &lt;500sqm plots)</span>
+              </span>
+            </div>
+
+            <!-- Action Buttons: Show Citizen & Copy for File / Note-sheet -->
+            <div class="flex items-center gap-2 self-start md:self-auto shrink-0">
+              <!-- Show Citizen Button -->
+              <button
+                type="button"
+                id="show-citizen-btn"
+                class="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                title="Open high-contrast citizen display view"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <span id="show-citizen-label">Show Citizen</span>
+              </button>
+
+              <!-- Copy for File / Note-sheet Button -->
+              <button
+                type="button"
+                id="copy-note-btn"
+                class="px-3.5 py-2 rounded-xl text-xs font-bold bg-[#1e3a8a] hover:bg-[#172554] active:scale-[0.98] text-white transition-all shadow-xs flex items-center gap-1.5 cursor-pointer border border-blue-900"
+                title="Copy formatted citation and excerpt for file note-sheet"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <span id="copy-btn-label">Copy for File / Note-sheet</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Top Box: Simple 1-sentence "Clerk Action Summary" -->
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[#1e3a8a]"></span>
+              <h2 id="summary-box-title" class="text-xs font-bold uppercase tracking-wider text-slate-700">
+                Clerk Action Summary:
+              </h2>
+            </div>
+            <div
+              id="answer-box-content"
+              class="p-4 sm:p-5 rounded-xl bg-[#eff6ff] border border-blue-200 text-[#172554] text-base sm:text-lg leading-relaxed font-semibold shadow-xs"
+            >
+              <!-- Filled dynamically via JS (1-2 sentences max) -->
+            </div>
+          </div>
+
+          <!-- Bottom Box: Full, complete, unedited Gazette Excerpt in monospace text block -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                <h3 id="excerpt-box-title" class="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  Official Gazette Excerpt (Verbatim):
+                </h3>
+              </div>
+              <span class="text-[11px] font-medium text-slate-500 font-mono">
+                Full Unedited Rule Text
+              </span>
+            </div>
+            <blockquote
+              id="legal-excerpt-content"
+              class="p-4 sm:p-5 rounded-xl bg-slate-50 border-l-4 border-l-[#1e3a8a] border-t border-r border-b border-slate-200 text-slate-900 font-mono text-xs sm:text-sm leading-relaxed whitespace-pre-wrap selection:bg-blue-100 max-h-[480px] overflow-y-auto shadow-inner"
+            >
+              <!-- Filled dynamically via JS -->
+            </blockquote>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Full-Screen High-Contrast Citizen Modal ("Show Citizen") -->
+    <div
+      id="citizen-modal"
+      class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-fadeIn"
+    >
+      <div
+        class="bg-white border-2 border-slate-300 w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col max-h-[92vh] overflow-hidden my-auto"
+      >
+        <!-- Modal Header -->
+        <div class="bg-[#1e3a8a] text-white px-5 sm:px-6 py-4 flex items-center justify-between border-b border-blue-900 shrink-0">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/20 flex flex-col items-center justify-center text-center">
+              <span class="text-[10px] font-bold text-amber-300">म.प्र.</span>
+            </div>
+            <div>
+              <span class="text-xs font-semibold text-blue-200 uppercase tracking-wider block">
+                Bhopal Municipal Corporation • Statutory Scrutiny Desk
+              </span>
+              <h2 class="text-base sm:text-lg font-bold text-white">
+                Official Rule Verification | म.प्र. भूमि विकास नियम 2012
+              </h2>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="close-citizen-modal"
+            class="text-blue-100 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg text-sm font-bold transition cursor-pointer flex items-center gap-1"
+          >
+            ✕ <span>Close / बंद करें</span>
+          </button>
+        </div>
+
+        <!-- Modal Body (Large High-Contrast View) -->
+        <div class="p-6 sm:p-8 space-y-6 overflow-y-auto">
+          <!-- Modal Top Badges -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200">
+            <div class="flex items-center gap-3">
+              <span
+                id="modal-rule-badge"
+                class="px-4 py-2 rounded-xl text-base sm:text-lg font-bold bg-[#1e3a8a] text-white font-mono shadow-xs"
+              >
+                Rule --
+              </span>
+              <span
+                id="modal-page-badge"
+                class="px-4 py-2 rounded-xl text-base sm:text-lg font-bold bg-slate-100 text-slate-800 border-2 border-slate-300 font-mono"
+              >
+                PDF Page --
+              </span>
+            </div>
+            
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-100 border border-amber-300 text-amber-900 rounded-lg text-xs font-bold">
+              <span>⚠️ Consolidated to March 2025 (Check Aug 2026 update for &lt;500sqm plots)</span>
+            </div>
+          </div>
+
+          <!-- Clerk Action Summary (Large High Contrast) -->
+          <div class="space-y-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-600 block">
+              Clerk Action Summary / विहित सारांश:
+            </span>
+            <div
+              id="modal-answer-content"
+              class="p-5 sm:p-6 rounded-2xl bg-blue-50 border-2 border-blue-200 text-[#0f172a] text-lg sm:text-xl font-bold leading-relaxed shadow-xs"
+            >
+              <!-- Filled via JS -->
+            </div>
+          </div>
+
+          <!-- Gazette Excerpt (Large Monospace) -->
+          <div class="space-y-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-600 block">
+              Official Legal Excerpt (Gazette Verbatim) / राजपत्र का मूल पाठ:
+            </span>
+            <pre
+              id="modal-excerpt-content"
+              class="p-5 sm:p-6 rounded-2xl bg-slate-100 border-2 border-slate-300 text-slate-950 font-mono text-xs sm:text-sm leading-relaxed whitespace-pre-wrap max-h-[40vh] overflow-y-auto shadow-inner"
+            ></pre>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="bg-slate-50 px-6 py-3.5 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 shrink-0">
+          <span class="font-semibold text-slate-700">
+            Points to rule. Clerk decides. Consolidated up to March 2025.
+          </span>
+          <button
+            type="button"
+            id="modal-close-bottom-btn"
+            class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-lg cursor-pointer transition text-xs"
+          >
+            Done Viewing
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500 mt-auto">
+      <div class="max-w-5xl mx-auto px-4 space-y-1">
+        <p class="font-semibold text-slate-700">
+          Points to rule. Clerk decides. Consolidated up to March 2025.
+        </p>
+        <p class="text-[11px] text-slate-400">
+          भोपाल नगर निगम • Bhopal Municipal Corporation Building Branch • MP Bhumi Vikas Rules 2012
+        </p>
+      </div>
+    </footer>
+
+    <!-- Interactive Client Script -->
+    <script is:inline>
+      let currentLanguage = 'en';
+      let currentResult = null;
+
+      const langBtnEn = document.getElementById('lang-btn-en');
+      const langBtnHi = document.getElementById('lang-btn-hi');
+      const searchForm = document.getElementById('clerk-search-form');
+      const searchInput = document.getElementById('search-input');
+      const searchBtn = document.getElementById('search-btn');
+      const searchBtnLabel = document.getElementById('search-btn-label');
+      const searchSpinner = document.getElementById('search-spinner');
+
+      const initialReadyCard = document.getElementById('initial-ready-card');
+      const silentWarningBanner = document.getElementById('silent-warning-banner');
+      const resultsCard = document.getElementById('results-card');
+      const ruleBadge = document.getElementById('rule-badge');
+      const pageBadge = document.getElementById('page-badge');
+      const summaryBoxTitle = document.getElementById('summary-box-title');
+      const excerptBoxTitle = document.getElementById('excerpt-box-title');
+      const answerBoxContent = document.getElementById('answer-box-content');
+      const legalExcerptContent = document.getElementById('legal-excerpt-content');
+      
+      const copyNoteBtn = document.getElementById('copy-note-btn');
+      const copyBtnLabel = document.getElementById('copy-btn-label');
+      const showCitizenBtn = document.getElementById('show-citizen-btn');
+      const showCitizenLabel = document.getElementById('show-citizen-label');
+
+      // Modal elements
+      const citizenModal = document.getElementById('citizen-modal');
+      const closeCitizenModalBtn = document.getElementById('close-citizen-modal');
+      const modalCloseBottomBtn = document.getElementById('modal-close-bottom-btn');
+      const modalRuleBadge = document.getElementById('modal-rule-badge');
+      const modalPageBadge = document.getElementById('modal-page-badge');
+      const modalAnswerContent = document.getElementById('modal-answer-content');
+      const modalExcerptContent = document.getElementById('modal-excerpt-content');
+
+      function updateLanguage(lang) {
+        currentLanguage = lang;
+        if (lang === 'en') {
+          langBtnEn.className = 'px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-white text-[#1e3a8a] shadow-sm cursor-pointer';
+          langBtnHi.className = 'px-3 py-1.5 rounded-md text-xs font-medium transition-all text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer';
+          searchInput.placeholder = 'Search rule number, setback dimensions, parking ratios, water buffer...';
+          searchBtnLabel.textContent = 'Search Rules';
+          summaryBoxTitle.textContent = 'Clerk Action Summary:';
+          excerptBoxTitle.textContent = 'Official Gazette Excerpt (Verbatim):';
+          showCitizenLabel.textContent = 'Show Citizen';
+          copyBtnLabel.textContent = 'Copy for File / Note-sheet';
+        } else {
+          langBtnHi.className = 'px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-white text-[#1e3a8a] shadow-sm cursor-pointer';
+          langBtnEn.className = 'px-3 py-1.5 rounded-md text-xs font-medium transition-all text-blue-100 hover:text-white hover:bg-white/10 cursor-pointer';
+          searchInput.placeholder = 'नियम संख्या, सेटबैक, पार्किंग अनुपात, जलस्रोतों का बफर खोजें...';
+          searchBtnLabel.textContent = 'नियम खोजें';
+          summaryBoxTitle.textContent = 'लिपिक कार्रवाई सारांश (Clerk Action Summary):';
+          excerptBoxTitle.textContent = 'राजपत्र का मूल विहित पाठ (Gazette Verbatim Excerpt):';
+          showCitizenLabel.textContent = 'नागरिक को दिखाएं';
+          copyBtnLabel.textContent = 'फाइल / नोटशीट हेतु प्रतिलिपि';
+        }
+
+        // Re-execute if user already searched so language switches instantly
+        const currentQuery = searchInput.value.trim();
+        if (currentQuery && currentResult) {
+          executeSearch(currentQuery);
+        }
+      }
+
+      langBtnEn.addEventListener('click', () => updateLanguage('en'));
+      langBtnHi.addEventListener('click', () => updateLanguage('hi'));
+
+      // Quick Chips handler
+      document.querySelectorAll('.quick-chip').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const query = btn.getAttribute('data-query');
+          if (query) {
+            searchInput.value = query;
+            executeSearch(query);
+          }
+        });
+      });
+
+      // Form submit handler
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const query = searchInput.value.trim();
+        if (query) {
+          executeSearch(query);
+        }
+      });
+
+      async function executeSearch(query) {
+        searchBtn.disabled = true;
+        searchBtnLabel.textContent = currentLanguage === 'hi' ? 'खोज जारी...' : 'Searching...';
+        searchSpinner.classList.remove('hidden');
+
+        try {
+          const res = await fetch('/api/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              query: query,
+              language: currentLanguage,
+            }),
+          });
+          const data = await res.json();
+          currentResult = data;
+          displayResults(data);
+        } catch (err) {
+          console.error('Search error:', err);
+          currentResult = null;
+          displayResults({
+            rule_found: false,
+            answer: 'Rule Silent / Not Found in MP Bhumi Vikas Rules 2012',
+            rule_number: 'N/A',
+            page_number: 'N/A',
+            exact_text_excerpt: 'N/A',
+          });
+        } finally {
+          searchBtn.disabled = false;
+          searchBtnLabel.textContent = currentLanguage === 'hi' ? 'नियम खोजें' : 'Search Rules';
+          searchSpinner.classList.add('hidden');
+        }
+      }
+
+      function displayResults(data) {
+        initialReadyCard.classList.add('hidden');
+
+        if (!data.rule_found) {
+          resultsCard.classList.add('hidden');
+          silentWarningBanner.classList.remove('hidden');
+          silentWarningBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          silentWarningBanner.classList.add('hidden');
+          resultsCard.classList.remove('hidden');
+
+          // Top Badges
+          ruleBadge.textContent = data.rule_number || 'Rule N/A';
+          pageBadge.textContent = data.page_number || 'PDF Page N/A';
+
+          // Clerk Action Summary (1-2 sentences max)
+          answerBoxContent.textContent = data.answer || '';
+
+          // Full, complete, unedited Gazette Excerpt
+          legalExcerptContent.textContent = data.exact_text_excerpt || '';
+
+          resultsCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+
+      // Copy for File / Note-sheet Button: Copies: [Rule XX | Page XX]: Excerpt...
+      copyNoteBtn.addEventListener('click', () => {
+        const rule = ruleBadge.textContent.trim();
+        const page = pageBadge.textContent.trim();
+        const excerpt = (currentResult && currentResult.exact_text_excerpt) 
+          ? currentResult.exact_text_excerpt 
+          : legalExcerptContent.textContent.trim();
+        
+        const textToCopy = `[${rule} | ${page}]: ${excerpt}`;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const originalText = copyBtnLabel.textContent;
+          copyBtnLabel.textContent = currentLanguage === 'hi' ? '✓ प्रतिलिपि कॉपी हो गई!' : '✓ Copied to File!';
+          setTimeout(() => {
+            copyBtnLabel.textContent = originalText;
+          }, 2000);
+        });
+      });
+
+      // Show Citizen Button: Opens full-screen high-contrast modal
+      function openCitizenModal() {
+        if (!currentResult || !currentResult.rule_found) return;
+
+        modalRuleBadge.textContent = currentResult.rule_number || ruleBadge.textContent;
+        modalPageBadge.textContent = currentResult.page_number || pageBadge.textContent;
+        modalAnswerContent.textContent = currentResult.answer || answerBoxContent.textContent;
+        modalExcerptContent.textContent = currentResult.exact_text_excerpt || legalExcerptContent.textContent;
+
+        citizenModal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      }
+
+      function closeCitizenModal() {
+        citizenModal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+
+      showCitizenBtn.addEventListener('click', openCitizenModal);
+      closeCitizenModalBtn.addEventListener('click', closeCitizenModal);
+      modalCloseBottomBtn.addEventListener('click', closeCitizenModal);
+
+      // Close modal on backdrop click or ESC key
+      citizenModal.addEventListener('click', (e) => {
+        if (e.target === citizenModal) {
+          closeCitizenModal();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !citizenModal.classList.contains('hidden')) {
+          closeCitizenModal();
+        }
+      });
+    </script>
+  </body>
+</html>
