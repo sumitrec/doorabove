@@ -6,7 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 // https://docs.astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({
+    includeFiles: ['./data/bhumi_vikas_rules.jsonl'],
+  }),
   vite: {
     plugins: [tailwindcss()],
   },

@@ -16,9 +16,13 @@
     "@astrojs/node": "^11.1.7",
     "@astrojs/vercel": "^11.0.13",
     "@cerebras/cerebras_cloud_sdk": "^1.91.0",
+    "@rolldown/binding-wasm32-wasi": "^1.2.13",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.8",
     "dotenv": "^18.0.7",
     "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "vercel": "^63.1.2"
   }
 }
